@@ -1,7 +1,9 @@
-import express from 'express';
+
 import bcrypt from 'bcrypt';
 import logger from '../utilities/logger.js';
-import User from '../models/userSchema.js';
+import {User} from '../models/userSchema.js';
+import ApiError from '../utilities/apiError.js';
+
 
 
 const registerUser = async ({email, password})=>{
@@ -30,7 +32,7 @@ const registerUser = async ({email, password})=>{
     } catch (error) {
        throw error
     }
-}
+};
 
 
 const logInUser = async ({email, password})=>{
@@ -63,4 +65,11 @@ const logInUser = async ({email, password})=>{
         
         throw error
     }
-}
+};
+
+const authServices = {
+  registerUser,
+  logInUser
+};
+
+export default authServices;

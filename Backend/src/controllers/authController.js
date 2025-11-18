@@ -1,7 +1,10 @@
 import express from "express"
-import logger from "../utilities/logger"
+import logger from "../utilities/logger.js"
+import authServices from '../services/authServices.js';
+import ApiResponse from "../utilities/apiResponse.js";
 
-const signUp = async (req, res, next) =>{
+
+export const signUp = async (req, res, next) =>{
 
    try {
         const {email, password} = req.body;
@@ -22,8 +25,7 @@ const signUp = async (req, res, next) =>{
 
 }
 
-
-const logIn = async (req, res, next) =>{
+export const logIn = async (req, res, next) =>{
 
     try {
         const {email, password} = req.body;

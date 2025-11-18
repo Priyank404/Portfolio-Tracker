@@ -1,5 +1,5 @@
 import Joi from "joi";
-import logger from "../utilities/logger";
+import logger from "../utilities/logger.js";
 
 const registerSchema = Joi.object({
   email: Joi.string()

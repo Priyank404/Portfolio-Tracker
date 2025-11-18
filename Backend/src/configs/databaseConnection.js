@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+dotenv.config();
 import logger from "../utilities/logger.js";
 
 const connectDB = async()=>{
