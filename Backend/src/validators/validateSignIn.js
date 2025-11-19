@@ -1,35 +1,30 @@
 import Joi from "joi";
 import logger from "../utilities/logger.js";
+import ApiError from "../utilities/apiError.js";
 
 const registerSchema = Joi.object({
   email: Joi.string()
-    .email()
-    .pattern(/@(.*)(\.com|\.net)$/)  // Must contain .com or .net
+    .pattern(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(com|net)$/)
     .required()
     .messages({
-      "string.email": "Email must be a valid email address.",
-      "string.pattern.base": "Email must end with .com or .net.",
+      "string.pattern.base": "Email must be valid and end with .com or .net.",
       "any.required": "Email is required."
     }),
 
   password: Joi.string()
     .min(3)
     .max(12)
-    .pattern(/^(?=.*[a-z])/)         // at least one lowercase
-    .pattern(/^(?=.*[A-Z])/)         // at least one uppercase
-    .pattern(/^(?=.*\d)/)            // at least one digit
-    .pattern(/^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])/)
-                                     // at least one special character
+    .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).+$/)
     .required()
     .messages({
       "string.min": "Password must be at least 3 characters.",
       "string.max": "Password must not exceed 12 characters.",
       "string.pattern.base":
-        "Password must contain at least one uppercase, one lowercase, one number, and one special character.",
+        "Password must contain uppercase, lowercase, number, and special character.",
       "any.required": "Password is required."
     }),
 
-  confirmPassword: Joi.any()
+  confirmPassword: Joi.string()
     .valid(Joi.ref("password"))
     .required()
     .messages({
@@ -37,6 +32,7 @@ const registerSchema = Joi.object({
       "any.required": "Confirm password is required."
     })
 });
+
 
 export const validateSignIn = (req, res, next) =>{
   const { error } = registerSchema.validate(req.body);

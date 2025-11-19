@@ -62,7 +62,6 @@ const logInUser = async ({email, password})=>{
 
 
     } catch (error) {
-        
         throw error
     }
 };
