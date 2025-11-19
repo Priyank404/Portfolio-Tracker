@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { signUpUser } from '../APIs/Auth.js'
 
 const Signup = () => {
   const [email, setEmail] = useState('')
@@ -9,12 +10,20 @@ const Signup = () => {
   const { login } = useAuth()
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // Simple validation
-    if (email && password && password === confirmPassword) {
-      login()
-      navigate('/dashboard')
+    try {
+      const res = await signUpUser(email, password, confirmPassword);
+      
+      
+      if(res.message == "success"){
+        login();
+        navigate("/dashboard");
+      }
+
+      
+    } catch (error) {
+      console.log(error);
     }
   }
 
