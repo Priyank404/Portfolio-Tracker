@@ -30,7 +30,7 @@ export const signUp = async (req, res, next) =>{
         )
    } catch (error) {
         logger.error("Error while signing up user", {error})
-        next(error)
+        next(error.message)
    }
 
 }
@@ -73,7 +73,7 @@ export const logOut = async (req, res, next) =>{
         logger.info("cookie cleared successfully");
 
         return res.status(200).json(new ApiResponse(200, {}, "success"));
-        
+
     } catch (error) {
         logger.error("Error while logging out user", {error});
         next(error.message)
