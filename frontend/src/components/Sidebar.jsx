@@ -1,12 +1,29 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { logOutUser } from '../APIs/Auth'
+
 
 const Sidebar = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const { logout } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
+
+  const handleLogout = async() => {
+    try {
+      const res = await logOutUser()
+      
+      if(res.message == "success"){
+        logout();
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+      
+    }
+    
+  }
 
   const menuItems = [
     { path: '/dashboard', label: 'Home', icon: '🏠' },
@@ -65,11 +82,7 @@ const Sidebar = () => {
 
           <div className="mt-auto pt-4 border-t border-primary-700">
             <button
-              onClick={() => {
-                setIsOpen(false)
-                logout()
-                navigate('/login')
-              }}
+              onClick={handleLogout}
               className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-primary-100 hover:bg-primary-700 transition-all"
             >
               <span className="text-xl">🚪</span>
