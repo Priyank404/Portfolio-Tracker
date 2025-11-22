@@ -1,9 +1,9 @@
 import logger from '../utilities/logger.js';
-import { transaction } from '../services/transactionServices.js';
+import  transaction  from '../services/transactionServices.js';
 import ApiResponse from '../utilities/apiResponse.js';
 import { Logger } from 'winston';
 
-export const addtransaction = async (req, res, next) => {
+export const addTransaction = async (req, res, next) => {
     try {
         const{type,name,quantity,price,date} = req.body;
         
@@ -47,7 +47,7 @@ export const deleteTransaction = async (req, res, next) =>{
         const userId = req.user.id;
 
         logger.info("Delete transaction attemped");
-        const result = await transaction.deleteTransaction({userId});
+        const result = await transaction.removeTransaction({userId});
 
         logger.info("Delete transaction successful");
 

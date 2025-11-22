@@ -1,4 +1,3 @@
-// services/transactionService.js
 import logger from "../utilities/logger.js";
 import { Transaction } from "../models/transactionSchema.js";
 import { Portfolio } from "../models/portfolioSchema.js";
@@ -273,8 +272,10 @@ async function reverseBuy({ portfolioId, name, transactionId, session }) {
   logger.info("reverseBuy: holding recalculated from remaining buys");
 }
 
-export default {
+const transaction = {
   createTransaction,
   getTransactions,
   removeTransaction
 };
+
+export default transaction;
